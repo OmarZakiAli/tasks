@@ -1,11 +1,12 @@
 import 'dart:convert';
-import 'dart:math';
+import 'package:random_string/random_string.dart';
+import 'dart:math' show Random;
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-
-void main() => runApp(MyApp());
+main(List<String> args) {
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -13,92 +14,54 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int num = 0;
-  DateTime t = DateTime.now();
-  String text = "";
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  String x = "s6897413";
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
+          home: Scaffold(
+            body: Center(
+          child: Container(
+          
             child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              text,
-              style: TextStyle(fontSize: 20, color: Colors.red),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.add),
-                  iconSize: 20,
-                  onPressed: () => add(),
+                FlatButton(
+
+                  color: Colors.red,
+                  child: Text(
+                    "generate",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onPressed: generateCode,
                 ),
-                Text(
-                  "${num.toString()}",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-                IconButton(
-                  icon: Icon(Icons.minimize),
-                  iconSize: 20,
-                  onPressed: () => subtract(),
-                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: getChildrenList())
               ],
             ),
-          ],
-        )),
+          ),
+        ),
       ),
     );
   }
 
-  add() {
-      num++;
+  generateCode() {
+    Random rnd = Random();
+    int num = rnd.nextInt(7);
+    String xx = randomBetween(10000000, 99999999).toString();
+    x = xx.replaceRange(num, num, randomString(1));
 
- if (num == t.day) {
-      text = "you reached the day";
-      Fluttertoast.showToast(msg: text ,gravity: ToastGravity.TOP);
-    } else if (num == t.month) {
-      text = "you reached the month";
-            Fluttertoast.showToast(msg: text ,gravity: ToastGravity.TOP);
-    } else {
-      text = "nothing special";
-    }
-
-    setState(() {
-    });
+    setState(() {});
   }
 
-
-
-  subtract() {
-
-if (num > 0) {
-        num--;
-      }
-
-     if (num == t.day) {
-      text = "you reached the day";
-        Fluttertoast.showToast(msg: text ,gravity: ToastGravity.TOP);
-
-    } else if (num == t.month) {
-      text = "you reached the month";
-            Fluttertoast.showToast(msg: text ,gravity: ToastGravity.TOP);
-
-    } else {
-      text = "nothing special";
+  getChildrenList() {
+    List<Widget> _list = [];
+    for (int i = 0; i < 8; i++) {
+      _list.add(Text(x[i], style: TextStyle(color: Colors.red, fontSize: 20)));
     }
-    setState(() {
-      
-    });
-  }
 
+    return _list;
+  }
 }
